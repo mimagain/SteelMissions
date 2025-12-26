@@ -18,11 +18,11 @@
 
 package io.github.stev6.easymissions.event;
 
+import io.github.stev6.easymissions.mission.Mission;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import io.github.stev6.easymissions.mission.Mission;
 
 public abstract class EasyMissionsEvent extends PlayerEvent {
     protected final ItemStack missionItem;

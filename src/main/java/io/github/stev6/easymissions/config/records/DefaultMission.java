@@ -20,11 +20,9 @@ package io.github.stev6.easymissions.config.records;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemRarity;
-import org.spongepowered.configurate.objectmapping.ConfigSerializable;
-import org.spongepowered.configurate.objectmapping.meta.Comment;
-import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.List;
+
 public record DefaultMission(
         String name,
         String completedName,

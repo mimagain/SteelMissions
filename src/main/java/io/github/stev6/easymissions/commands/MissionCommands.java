@@ -18,13 +18,12 @@
 
 package io.github.stev6.easymissions.commands;
 
-import com.google.common.collect.Maps;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import io.github.stev6.easymissions.EasyMissions;
 import io.github.stev6.easymissions.commands.subcommands.*;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.jetbrains.annotations.ApiStatus;
-import io.github.stev6.easymissions.EasyMissions;
 
 @ApiStatus.Internal
 public class MissionCommands {
