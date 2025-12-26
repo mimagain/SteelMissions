@@ -3,7 +3,7 @@
 # Each top-level key is stored on the mission item. Keep the keys short
 # Because of the above, existing mission items with missing entries will not work
 # For a full explanation and list of mission types, examples, and options, read the wiki and make sure to check default.yml
-
+# This file can be deleted when you have another .yml file in the directory, it will regenerate when there is no valid mission configs in the directory
 
 # Here is a mission that will utilize all possible options right now. Don't be afraid of how big it looks right now, it gets way shorter using defaults
 break_stone: # Mission top-level key

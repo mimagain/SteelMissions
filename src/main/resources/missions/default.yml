@@ -18,7 +18,5 @@ default:
   category: "easy"
   item_rarity: "COMMON"
   item_material: "PAPER"
-  custom_model_id: 100
-  completed_custom_model_id: 101
 
 
