@@ -39,10 +39,18 @@ public record BrewListener(MissionManager m, BrewCache c) implements Listener {
     public void onBrew(BrewEvent e) {
         Player p = c.getPlayerAssociated(e.getBlock());
         if (p == null) return;
-        for (ItemStack i : e.getResults()) {
-            PotionType type = ListenerUtils.getPotionTypeOrNull(i);
-            if (type == null) continue;
-            m.findAndModifyFirstMission(p, "brew", type.name(), mission -> mission.incrementProgress(1));
+
+        for (int i = 0; i < e.getResults().size(); i++) {
+
+            ItemStack newItem = e.getResults().get(i);
+            PotionType newType = ListenerUtils.getPotionTypeOrNull(newItem);
+            if (newType == null) continue;
+
+            ItemStack oldItem = e.getContents().getItem(i);
+            PotionType oldType = ListenerUtils.getPotionTypeOrNull(oldItem);
+            if (oldType != null && oldType == newType) continue; // skip if no PotionType change occurred
+
+            m.findAndModifyFirstMission(p, "brew", newType.name(), mission -> mission.incrementProgress(1));
         }
     }
 

@@ -106,7 +106,6 @@ public class ConfigManager {
                         messagesSection.getString("needs_player", "<red>Only players can use this command.</red>"),
                         messagesSection.getString("needs_mission", "<red>You must be holding a mission to use this command</red>"),
                         messagesSection.getString("give_mission", "<green>Successfully gave <mission> to <target></green>"),
-                        messagesSection.getString("full_inventory", "<red>Target inventory is full.</red>"),
                         messagesSection.getString("rand_mission_not_found", "<red>Couldn't find any mission entry in the category, make sure all configs are assigned"),
                         messagesSection.getString("set_success", "<green>Success</green>"));
 

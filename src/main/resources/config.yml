@@ -10,7 +10,6 @@ messages:
   needs_player: "<red>Only players can use this command.</red>"
   needs_mission: "<red>You must be holding a mission with a valid config entry to use this command</red>"
   give_mission: "<green>Successfully gave <mission> to <target></green>"
-  full_inventory: "<red>Target inventory is full.</red>"
   rand_mission_not_found: "<red>Couldn't find any mission entry in the category, make sure all configs are assigned"
   set_success: "<green>Success</green>"
 

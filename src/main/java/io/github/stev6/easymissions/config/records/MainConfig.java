@@ -31,7 +31,6 @@ public record MainConfig(Messages messages, Map<String, Integer> categories, Mis
             String needsPlayer,
             String needsMission,
             String giveMission,
-            String fullInventory,
             String randMissionNotFound,
             String setSuccess) {
     }

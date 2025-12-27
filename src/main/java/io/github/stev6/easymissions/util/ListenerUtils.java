@@ -54,6 +54,7 @@ public class ListenerUtils {
     }
 
     public static PotionType getPotionTypeOrNull(ItemStack i) {
+        if (i == null) return null;
         PotionContents data = i.getData(DataComponentTypes.POTION_CONTENTS);
         return data != null ? data.potion() : null;
     }
