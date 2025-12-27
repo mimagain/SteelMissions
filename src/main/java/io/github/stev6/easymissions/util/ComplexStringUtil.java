@@ -20,11 +20,11 @@ package io.github.stev6.easymissions.util;
 
 import java.util.regex.Pattern;
 
-public final class  ComplexStringUtil {
+public final class ComplexStringUtil {
     public static final Pattern REGEX = Pattern.compile("\\s+");
-    public static final String DELIMITER = " ";
+    public static final char DELIMITER = ' ';
 
     public static String buildComplexString(String... s) {
-        return String.join(DELIMITER, s);
+        return String.join(String.valueOf(DELIMITER), s);
     }
 }

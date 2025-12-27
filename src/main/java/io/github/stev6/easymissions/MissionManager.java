@@ -128,7 +128,7 @@ public class MissionManager {
             MissionConfig config = configManager.getMissions().get(m.getConfigID());
 
             if (config == null) {
-                handleBrokenMission(i);
+                handleBrokenMission(i,m.getConfigID());
                 continue;
             }
 
@@ -268,10 +268,11 @@ public class MissionManager {
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    private void handleBrokenMission(ItemStack i) {
+    private void handleBrokenMission(ItemStack i, String id) {
         if (i.getPersistentDataContainer().has(invalidKey, PersistentDataType.BYTE)) return;
         if (getMissionOrNull(i) == null) return;
         i.editPersistentDataContainer(pdc -> pdc.set(invalidKey, PersistentDataType.BYTE, (byte) 1));
+        plugin.getLogger().severe("Config entry \"" + id + "\" is missing/invalid, please fix");
         List<Component> lore = List.of(MINI_MESSAGE.deserialize("<red><st>MISSION HAS INVALID CONFIG ID</st>"));
         i.setData(DataComponentTypes.LORE, ItemLore.lore().addLines(lore).build());
         i.setData(DataComponentTypes.CUSTOM_NAME, MINI_MESSAGE.deserialize("BROKEN MISSION"));

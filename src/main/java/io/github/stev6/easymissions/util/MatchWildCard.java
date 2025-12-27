@@ -22,6 +22,8 @@ import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collection;
 
+import static io.github.stev6.easymissions.util.ComplexStringUtil.DELIMITER;
+
 @ApiStatus.Internal // you wouldn't want to use this yourself anyway...
 public final class MatchWildCard {
     public static boolean matchesTarget(String pattern, String text) {
@@ -43,8 +45,30 @@ public final class MatchWildCard {
     }
 
     public static boolean wildCardCheck(Collection<String> config, String target) {
-        for (String pattern : config) if (matchesTarget(pattern, target)) return true;
+        for (String s : config) if (checkStr(s, target)) return true;
         return false;
     }
 
+    public static boolean checkStr(String pattern, String target) {
+        int tStart = 0, pStart = 0;
+        int tLen = target.length(), pLen = pattern.length();
+
+        while (tStart < tLen) {
+            int tIdx = target.indexOf(DELIMITER, tStart);
+            int pIdx = pattern.indexOf(DELIMITER, pStart);
+            if (tIdx < 0) tIdx = tLen;
+            if (pIdx < 0) pIdx = pLen;
+
+            if (!matchesTarget(pattern.substring(pStart, pIdx), target.substring(tStart, tIdx)))
+                return false;
+
+            pStart = pIdx;
+            tStart = tIdx;
+
+            while (pStart < pLen && pattern.charAt(pStart) == DELIMITER) pStart++;
+            while (tStart < tLen && target.charAt(tStart) == DELIMITER) tStart++;
+        }
+
+        return pStart == pLen;
+    }
 }
