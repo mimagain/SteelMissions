@@ -44,7 +44,17 @@ anti_abuse:
   recent_block_step_cache: true
   # Maximum size of the player step cache (per player). Keep small for performance.
   recent_block_step_cache_size: 5
-
+feedback:
+  action_bar:
+    enabled: true
+    format: "<gold><mission>: <green><progress>/<requirement>"
+  sound:
+    enabled: true
+    # Use standard names found on the Minecraft Wiki (sounds.json)
+    # Example: 'entity.experience_orb.pickup', 'block.note_block.bell'
+    sound: "block.note_block.bell"
+    volume: 0.5
+    pitch: 1.5
 menus:
   # What will be displayed to the player when using the /steelmissions data command.
   data_menu: |-
