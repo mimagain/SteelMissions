@@ -1,4 +1,4 @@
-# EasyMissions - Mission config
+# SteelMissions - Mission config
 # Any valid mission config file in the missions folder/directory will work. Feel free to categorize by file
 # Each top-level key is stored on the mission item. Keep the keys short
 # Because of the above, existing mission items with missing entries will not work

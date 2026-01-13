@@ -1,4 +1,4 @@
-# EasyMissions Configuration,
+# SteelMissions Configuration,
 # Uses MiniMessage for coloring and placeholders.
 # Different messages have different placeholders available, see the wiki for full lists.
 
@@ -46,18 +46,18 @@ anti_abuse:
   recent_block_step_cache_size: 5
 
 menus:
-  # What will be displayed to the player when using the /easymissions data command.
+  # What will be displayed to the player when using the /steelmissions data command.
   data_menu: |-
     <dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     <gold><bold>Mission Data</bold></gold>
     <gray>UUID: <yellow><italic><uuid></italic></yellow>
     <dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    <gray>▸ <gold><bold>Config Entry:</bold></gold> <white><config_id></white> <click:suggest_command:'/em set entry '><hover:show_text:'<#dc2626>edit config entry'><dark_red>🖊</dark_red></hover></click>
+    <gray>▸ <gold><bold>Config Entry:</bold></gold> <white><config_id></white> <click:suggest_command:'/sm set entry '><hover:show_text:'<#dc2626>edit config entry'><dark_red>🖊</dark_red></hover></click>
     <gray>▸ <gold><bold>Type:</bold></gold> <aqua><type></aqua>
-    <gray>▸ <gold><bold>Requirement:</bold></gold> <yellow><requirement></yellow> <click:suggest_command:'/em set requirement '><hover:show_text:'<#dc2626>edit requirement'><dark_red>🖊</dark_red></hover></click>
-    <gray>▸ <gold><bold>Progress:</bold></gold> <green><progress></green> <click:suggest_command:'/em set progress '><hover:show_text:'edit progress'><dark_red>🖊</dark_red></hover></click>
-    <gray>▸ <gold><bold>Completed:</bold></gold> <blue><completed></blue> <click:suggest_command:'/em set completed '><hover:show_text:'edit completed'><dark_red>🖊</dark_red></hover></click>
+    <gray>▸ <gold><bold>Requirement:</bold></gold> <yellow><requirement></yellow> <click:suggest_command:'/sm set requirement '><hover:show_text:'<#dc2626>edit requirement'><dark_red>🖊</dark_red></hover></click>
+    <gray>▸ <gold><bold>Progress:</bold></gold> <green><progress></green> <click:suggest_command:'/sm set progress '><hover:show_text:'edit progress'><dark_red>🖊</dark_red></hover></click>
+    <gray>▸ <gold><bold>Completed:</bold></gold> <blue><completed></blue> <click:suggest_command:'/sm set completed '><hover:show_text:'edit completed'><dark_red>🖊</dark_red></hover></click>
 
     <hover:show_text:'<targets>'><#b91c1c><u>Hover to view targets →</u></#b91c1c></hover>
     <dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

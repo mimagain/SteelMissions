@@ -207,8 +207,8 @@ The list of commands available and what they do is:
 - **/SteelMissions list-types** gives you a list of all available mission types you can use
 
 There are 2 aliases available and they are:
-- **em** short for SteelMissions
-- **easym** short but not so short for SteelMissions
+- **sm** short for SteelMissions
+- **steelm** short but not so short for SteelMissions
 
 
 # Config Overview
