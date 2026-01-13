@@ -37,7 +37,7 @@ import java.util.UUID;
  */
 
 public class Mission {
-
+    private final long expirationTime;
     private final UUID uuid;
     private String configID;
     private int requirement;
@@ -49,18 +49,21 @@ public class Mission {
             int requirement,
             boolean completed,
             int progress,
-            @NotNull UUID uuid) {
+            @NotNull UUID uuid,
+            long expirationTime) {
         this.configID = configID;
         this.requirement = requirement;
         this.completed = completed;
         this.progress = progress;
         this.uuid = uuid;
+        this.expirationTime = expirationTime;
     }
 
     @ApiStatus.Internal
     @NotNull
-    public static Mission create(@NotNull String configID, int requirement) {
-        return new Mission(configID, requirement, false, 0, UUID.randomUUID());
+    public static Mission create(@NotNull String configID, int requirement, long durationSeconds) {
+        long expiry = (durationSeconds > 0) ? System.currentTimeMillis() + (durationSeconds * 1000) : 0;
+        return new Mission(configID, requirement, false, 0, UUID.randomUUID(), expiry);
     }
 
     @ApiStatus.Internal
@@ -70,8 +73,9 @@ public class Mission {
             int requirement,
             boolean completed,
             int progress,
-            @NotNull UUID uuid) {
-        return new Mission(configID, requirement, completed, progress, uuid);
+            @NotNull UUID uuid,
+            long expirationTime) {
+        return new Mission(configID, requirement, completed, progress, uuid, expirationTime);
     }
 
     /**
@@ -99,6 +103,9 @@ public class Mission {
         return progress;
     }
 
+    public long getExpirationTime() {
+        return expirationTime;
+    }
     /**
      * Sets the {@link #progress} to the given value
      * <p>

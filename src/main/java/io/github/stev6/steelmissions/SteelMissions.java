@@ -199,6 +199,10 @@ public class SteelMissions extends JavaPlugin implements Listener {
         pluginManager.registerEvents(new MissionInventoryResult(missionManager), this);
         pluginManager.registerEvents(new ClaimListener(configManager), this);
         pluginManager.registerEvents(new MissionInteract(missionManager), this);
+        pluginManager.registerEvents(new MissionFeedbackListener(this), this);
+        pluginManager.registerEvents(new MissionFailListener(missionManager), this);
+        pluginManager.registerEvents(new MissionHeldTimer(this), this);
+
     }
 
     public boolean isDebug() {

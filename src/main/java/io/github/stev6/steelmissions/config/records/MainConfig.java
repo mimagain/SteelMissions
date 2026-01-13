@@ -23,7 +23,7 @@ import net.kyori.adventure.key.Key;
 import java.util.Map;
 
 public record MainConfig(Messages messages, Map<String, Integer> categories, Mission mission, AntiAbuse antiAbuse,
-                         Menus menus) {
+                         Menus menus, Feedback feedback) {
 
     public record Messages(
             String reload,
@@ -32,7 +32,8 @@ public record MainConfig(Messages messages, Map<String, Integer> categories, Mis
             String needsMission,
             String giveMission,
             String randMissionNotFound,
-            String setSuccess) {
+            String setSuccess
+    ) {
     }
 
     public record Mission(
@@ -57,4 +58,12 @@ public record MainConfig(Messages messages, Map<String, Integer> categories, Mis
             String dataMenu
     ) {
     }
+    public record Feedback(
+            boolean actionBarEnabled,
+            String actionBarFormat,
+            boolean soundEnabled,
+            String soundKey,
+            float soundVolume,
+            float soundPitch
+    ) {}
 }

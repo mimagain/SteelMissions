@@ -66,7 +66,7 @@ public class MissionManager {
     @SuppressWarnings("UnstableApiUsage")
     public ItemStack createMissionItem(MissionConfig config) {
         int req = ThreadLocalRandom.current().nextInt(config.reqMin(), config.reqMax() + 1);
-        Mission m = Mission.create(config.key(), req);
+        Mission m = Mission.create(config.key(), req, config.duration());
         ItemStack i = new ItemStack(config.itemMaterial());
 
         i.editPersistentDataContainer(pdc -> pdc.set(dataKey, MissionPersistentDataType.INSTANCE, m));
@@ -76,7 +76,10 @@ public class MissionManager {
 
         List<Component> lore = config.lore().stream().map(line -> mm.deserialize(line, tags)).toList();
         Component displayName = mm.deserialize(config.name(), tags);
-
+        if (m.getExpirationTime() > 0) {
+            lore.add(Component.empty()); // Spacer
+            lore.add(mm.deserialize("<gray><i>Hold item to see time remaining</i></gray>"));
+        }
         i.unsetData(DataComponentTypes.ATTRIBUTE_MODIFIERS);
         i.unsetData(DataComponentTypes.ENCHANTABLE);
         i.unsetData(DataComponentTypes.REPAIRABLE);
@@ -115,7 +118,20 @@ public class MissionManager {
     public void findAndModifyFirstMission(Player p, @NotNull String type, @NotNull Consumer<Mission> doThing) {
         findAndModifyFirstMission(p, type, null, doThing);
     }
+    public void failMission(Player p, ItemStack i, Mission m, String reason) {
+        p.getInventory().removeItem(i); // Remove the item
 
+        // Send Feedback
+        TagResolver tags = getMissionTags(m);
+        p.sendMessage(MINI_MESSAGE.deserialize(
+                "<red><b>MISSION FAILED!</b> <gray>You <reason> while holding <mission>.",
+                tags,
+                Placeholder.unparsed("reason", reason),
+                Placeholder.unparsed("mission", m.getConfigID()) // Fallback if tags fail
+        ));
+
+        p.playSound(p.getLocation(), "entity.item.break", 1f, 0.6f);
+    }
     public void findAndModifyFirstMission(Player p, @NotNull String type, @Nullable String target, @NotNull Consumer<Mission> doThing) {
         if (target != null) target = target.toLowerCase(Locale.ROOT);
 
@@ -131,7 +147,10 @@ public class MissionManager {
                 handleBrokenMission(i,m.getConfigID());
                 continue;
             }
-
+            if (m.getExpirationTime() > 0 && System.currentTimeMillis() > m.getExpirationTime()) {
+                failMission(p, i, m, "ran out of time"); // Use the fail method we made in the previous step
+                continue;
+            }
             MissionType missionType = config.type();
             if (!missionType.id().equalsIgnoreCase(type)) continue;
 

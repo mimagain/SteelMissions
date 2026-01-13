@@ -51,11 +51,11 @@ public class MissionPersistentDataType implements PersistentDataType<byte[], Mis
 
     @Override
     public byte @NotNull [] toPrimitive(@NotNull Mission complex, @NotNull PersistentDataAdapterContext context) {
-
-
         byte[] configID = complex.getConfigID().getBytes(StandardCharsets.UTF_8);
         UUID uuid = complex.getUUID();
-        int size = Integer.BYTES * 2 + Long.BYTES * 2 + 1 + configID.length;
+
+        // Add Long.BYTES (8) for expirationTime
+        int size = Integer.BYTES * 2 + Long.BYTES * 3 + 1 + configID.length;
 
         ByteBuffer bb = ByteBuffer.allocate(size);
         bb.putInt(complex.getRequirement());
@@ -63,17 +63,15 @@ public class MissionPersistentDataType implements PersistentDataType<byte[], Mis
         bb.putLong(uuid.getMostSignificantBits());
         bb.putLong(uuid.getLeastSignificantBits());
         bb.put((byte) (complex.isCompleted() ? 1 : 0));
+        bb.putLong(complex.getExpirationTime());
         bb.put(configID);
 
         return bb.array();
     }
 
     @Override
-    public @NotNull Mission fromPrimitive(
-            byte @NotNull [] primitive, @NotNull PersistentDataAdapterContext context) {
+    public @NotNull Mission fromPrimitive(byte @NotNull [] primitive, @NotNull PersistentDataAdapterContext context) {
         ByteBuffer bb = ByteBuffer.wrap(primitive);
-
-        // meow used to be here
 
         int requirement = bb.getInt();
         int progress = bb.getInt();
@@ -81,10 +79,18 @@ public class MissionPersistentDataType implements PersistentDataType<byte[], Mis
         long leastSignificant = bb.getLong();
         UUID uuid = new UUID(mostSignificant, leastSignificant);
         boolean completed = bb.get() != 0;
+
+        // Handle backwards compatibility (old items won't have the extra bytes)
+        long expirationTime = 0;
+        // If we have at least 8 bytes (long) + 1 byte (string char), try reading
+        if (bb.remaining() > 8) {
+            expirationTime = bb.getLong();
+        }
+
         byte[] configIDBytes = new byte[bb.remaining()];
         bb.get(configIDBytes);
         String configID = new String(configIDBytes, StandardCharsets.UTF_8);
 
-        return Mission.recreate(configID, requirement, completed, progress, uuid);
+        return Mission.recreate(configID, requirement, completed, progress, uuid, expirationTime);
     }
 }

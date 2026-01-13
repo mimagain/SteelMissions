@@ -31,5 +31,8 @@ public record DefaultMission(
         String category,
         ItemRarity itemRarity,
         Material itemMaterial,
-        List<String> blacklistedWorlds) {
+        List<String> failConditions,
+        List<String> blacklistedWorlds,
+        long duration) {
+
 }

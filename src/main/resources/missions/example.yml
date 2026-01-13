@@ -48,7 +48,30 @@ break_stone: # Mission top-level key
     - "give <player> cobblestone 64"
 
 # Above is a full, functional mission with all options that should have a requirement between 10 and 100 and progresses when a player breaks stone/cobblestone
+example_timed_kill:
+  name: "<dark_red><b>Hardcore Hunt</b></dark_red>"
+  completed_name: "<green><b>Hunt Survived</b></green>"
+  category: "hard"
+  type: "kill"
+  targets: ["CREEPER"]
+  requirement_min: 5
 
+  # --- NEW FEATURES ---
+  duration: 300                 # 5 Minutes
+  fail_conditions: ["DEATH"]    # Fails if player dies
+
+  lore:
+    - "<gray>Hunt 5 Creepers.</gray>"
+    - ""
+    - "<red><b>WARNING:</b></red>"
+    - "<red> - Fails on Death</red>"
+    - "<red> - Limited Time</red>"
+    - ""
+    - "<white>Progress: <green><progress></green>/<red><requirement></red></white>"
+
+    # The plugin will AUTOMATICALLY append:
+    # "Hold item to see time remaining"
+    # because 'duration' is > 0.
 example_complex: # This is a complex mission minimal example, you can read more about it at the wiki but this is just a demonstration
 
   name: "<gold>Complex Mission</gold>"
