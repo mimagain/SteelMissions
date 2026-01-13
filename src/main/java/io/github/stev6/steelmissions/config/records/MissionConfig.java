@@ -44,5 +44,7 @@ public record MissionConfig(
         Optional<Key> completedItemModel,
         Material itemMaterial,
         List<String> rewards,
-        Set<UUID> blacklistedWorlds) {
+        List<String> failConditions,
+        Set<UUID> blacklistedWorlds,
+        long duration) {
 }

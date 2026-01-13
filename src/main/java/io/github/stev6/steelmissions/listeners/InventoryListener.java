@@ -37,7 +37,7 @@ import java.util.Objects;
 
 import static io.github.stev6.steelmissions.util.ListenerUtils.*;
 
-public record InventoryListener(MissionManager m) implements Listener {
+public record   InventoryListener(MissionManager m) implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGrindstoneInventoryClick(InventoryClickEvent e) {

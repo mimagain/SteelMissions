@@ -147,7 +147,24 @@ public class ConfigManager {
 
         MainConfig.Menus menus = new MainConfig.Menus(getConfigString(menusSection, "data_menu"));
 
-        mainConfig = new MainConfig(messages, categories, mission, antiAbuse, menus);
+        ConfigurationSection feedbackSection = plugin.getConfig().getConfigurationSection("feedback");
+        // Default fallback if section is missing from old config
+        MainConfig.Feedback feedback;
+        if (feedbackSection == null) {
+            feedback = new MainConfig.Feedback(false, "", false, "", 1f, 1f);
+        } else {
+            feedback = new MainConfig.Feedback(
+                    feedbackSection.getBoolean("action_bar.enabled", true),
+                    feedbackSection.getString("action_bar.format", "<gold><mission>: <green><progress>/<requirement>"),
+                    feedbackSection.getBoolean("sound.enabled", true),
+                    feedbackSection.getString("sound.sound", "block.note_block.hat"),
+                    (float) feedbackSection.getDouble("sound.volume", 0.5),
+                    (float) feedbackSection.getDouble("sound.pitch", 1.5)
+            );
+        }
+
+        // Update constructor call
+        mainConfig = new MainConfig(messages, categories, mission, antiAbuse, menus, feedback);
     }
 
     private void loadDefaultMission(File defaultMission) {
@@ -199,8 +216,10 @@ public class ConfigManager {
 
         Material material = Material.matchMaterial(getConfigString(missionSection, "item_material"));
         if (material == null) throw new ConfigException("No material set in default mission");
+        long duration = missionSection.getLong("duration", 0);
 
         List<String> worlds = missionSection.getStringList("blacklisted_worlds");
+        List<String> failConditions = missionSection.getStringList("fail_conditions");
 
         defaultMission = new DefaultMission(
                 name,
@@ -210,7 +229,9 @@ public class ConfigManager {
                 category,
                 rarity,
                 material,
-                worlds
+                worlds,
+                failConditions,
+                duration
         );
     }
 
@@ -228,6 +249,12 @@ public class ConfigManager {
         if (!completedLore.isEmpty() && completedLore.getFirst().trim().equals("[LORE!]")) {
             completedLore = lore.stream().map(s -> "<st>" + s + "</st>").toList();
         }
+        List<String> failConditions = missionSection.contains("fail_conditions", true)
+                ? missionSection.getStringList("fail_conditions")
+                : defaultMission.failConditions();
+        long duration = missionSection.contains("duration")
+                ? missionSection.getLong("duration")
+                : defaultMission.duration();
 
         String category = missionSection.getString("category", defaultMission.category());
         MissionType type = plugin.getTypeRegistry().get(getConfigString(missionSection, "type").toLowerCase(Locale.ROOT));
@@ -294,7 +321,11 @@ public class ConfigManager {
                 completedItemModel,
                 material,
                 rewards,
-                blacklistedWorlds
+                failConditions,
+                blacklistedWorlds,
+                duration
+
+
         );
 
         missions.put(mission.key(), mission);
