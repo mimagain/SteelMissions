@@ -1,5 +1,5 @@
 <div align="center">
-<h1>EasyMissions – Missions / Scrolls Plugin</h1> 
+<h1>SteelMissions – Missions / Scrolls Plugin</h1> 
 
 > **NOTE:** This plugin is still in **alpha**. Expect instability and possibly bugs and breaking changes between versions.
 
@@ -25,7 +25,7 @@
 ## Some things you need to know, Please read.
 To begin:
 
-Due to the current stability state of EasyMissions which is **alpha**, there will be 0 guarantees about stability from one version to another in your server, right now it should be fulfilling enough to just work out of the box for you and all types and features should be working correctly as intended. However, that doesn't assure that breaking changes that may cause things like older mission items being entirely stale or useless, different logic applying for features or types, and architecture changes will not occur.
+Due to the current stability state of SteelMissions which is **alpha**, there will be 0 guarantees about stability from one version to another in your server, right now it should be fulfilling enough to just work out of the box for you and all types and features should be working correctly as intended. However, that doesn't assure that breaking changes that may cause things like older mission items being entirely stale or useless, different logic applying for features or types, and architecture changes will not occur.
 
 Breaking changes will be noted in each release, once it is stable you can expect this section in the README to be removed
 
@@ -46,12 +46,12 @@ For example, if you decide to have a new texture for missions on your server, pl
 
 This gives server admins **full control over all missions**, but also puts the responsibility on them to maintain valid configurations to not brick everything up.
 
-In attempt to mitigate how easy it is to brick things with this system, EasyMissions is **strict**:
+In attempt to mitigate how easy it is to brick things with this system, SteelMissions is **strict**:
 - Mission configs will be **FURIOUS** if you misconfigure them.
 - If a mission config is missing certain options or is invalid, **ALL configuration loading for the plugin is stopped**.
 - This forces issues to be fixed immediately rather than allowing the server to run in a broken state.
 
-Due to the goals of EasyMissions, there is **NO** older version support, no spigot/bukkit support and no guarantee that newer api usage as updates happen won't break it on the versions it already supported. As of now EasyMissions works only on:
+Due to the goals of SteelMissions, there is **NO** older version support, no spigot/bukkit support and no guarantee that newer api usage as updates happen won't break it on the versions it already supported. As of now SteelMissions works only on:
 
 - PaperMC and probably most of its derivatives/forks
 - FoliaMC (Considered unstable, race conditions might exist, and I'm not familiar with folia that much, but I can tell you it starts and I didn't run into any issues so far)
@@ -69,7 +69,7 @@ Types are the most important in the plugin and the second most important part of
 
 There is **24** available mission types ranging from things as simple as "kill 3 sheep" to specific ones that allow you to do things like "enchant a netherite sword with sharpness level 5", you may see all types later down there and their detailed descriptions and examples in the wiki
 
-Thanks to the MissionType implementation (which may not be the cleanest) it's possible to do a lot of things with EasyMissions and to make use of that I made:
+Thanks to the MissionType implementation (which may not be the cleanest) it's possible to do a lot of things with SteelMissions and to make use of that I made:
 **Complex Types!**
 Complex types allow you to have more than 1 condition/target for something, by default you'll notice that normal types focus on only one target, like "enchant diamond sword" but what if you want to also specify what enchant? what level? that's where complex types come in! these allow you to have more than one condition/target for the mission to progress, as of the time of writing this there is only one complex type, and it is ***complex_enchant*** which allows you to have targets containing the enchant, its level and the item and only when a player matches all those conditions the mission will progress.
 
@@ -135,15 +135,15 @@ Now there are some options and things that just cannot be defaulted to, such as 
 
 #### API
 ---
-Although right now the EasyMissions API lacks testing, it should be relatively easy to register new types and do other cool stuff with the API, It's as simple as getting an instance of the API with
+Although right now the SteelMissions API lacks testing, it should be relatively easy to register new types and do other cool stuff with the API, It's as simple as getting an instance of the API with
 ```java
-EasyMissionsAPI.getInstance()
+SteelMissionsAPI.getInstance()
 ```
 
 You can take a look at the API documentation or the javadocs to see what you can do, but for now you can register a new mission type by doing this:
 
 ```java
-EasyMissionsAPI api = EasyMissionsAPI.getInstance();
+SteelMissionsAPI api = SteelMissionsAPI.getInstance();
 
 api.registerType(MissionType.matchEnum("cool_mission_type", CoolEnum.class));
 ```
@@ -184,7 +184,7 @@ completed_item_model: minecraft:diamond_block # This will set the item's texture
 
 #### Configurability
 ---
-EasyMissions started with hardcoded types in an enum and the items were barely configurable, the way types were made back then made them only work with enum types, that made enchanting or more complex missions entirely dependent on the listener and gave little power to the creation of new types and the API, this would have ended up in very little types existing and the config lacking many options however this changed and now everything is easier for both the admin and the developers working on the plugin or API, you can configure almost every part of the item's display visible to the players such as:
+SteelMissions started with hardcoded types in an enum and the items were barely configurable, the way types were made back then made them only work with enum types, that made enchanting or more complex missions entirely dependent on the listener and gave little power to the creation of new types and the API, this would have ended up in very little types existing and the config lacking many options however this changed and now everything is easier for both the admin and the developers working on the plugin or API, you can configure almost every part of the item's display visible to the players such as:
 - **Name and its completed variant** The display name for the mission depending on whether it's completed or not
 - **Lore and its completed variant** The lore for the mission depending on whether it;s completed or not
 - **Texture and its completed variant** The mission item's texture
@@ -193,22 +193,22 @@ EasyMissions started with hardcoded types in an enum and the items were barely c
 
 And other options, those were just the ones I believe are worth mentioning. Feel free to check out the example.yml
 # Commands
-For the normal players there is no available commands and any command requires easymissions.admin or OP to be executed
+For the normal players there is no available commands and any command requires SteelMissions.admin or OP to be executed
 
 > **|** means OR in the examples, so [progress **|** requirement] means that both progress OR requirement are valid arguments
 
 The list of commands available and what they do is:
-- **/easymissions random [player]** gives a player a random mission (picks a category by weight, then a mission config belonging to that category)
-- **/easymissions category-random [category] [player]** gives a player a random mission from a given category.
-- **/easymissions give [player] [configentry]** gives a player a mission linked to the given config entry
-- **/easymissions reload** reloads the plugin, some things such as turning a cache on/off require a restart and will not update by just reloading
-- **/easymissions data** a little configurable chat message that displays info about the held mission and suggests commands to change them.
-- **/easymissions set [progress | requirement | completed | entry]** allows you to change the data on the held mission to your liking, entry for example will let you use a different config entry for the mission if you want to migrate from an entry to another.
-- **/easymissions list-types** gives you a list of all available mission types you can use
+- **/SteelMissions random [player]** gives a player a random mission (picks a category by weight, then a mission config belonging to that category)
+- **/SteelMissions category-random [category] [player]** gives a player a random mission from a given category.
+- **/SteelMissions give [player] [configentry]** gives a player a mission linked to the given config entry
+- **/SteelMissions reload** reloads the plugin, some things such as turning a cache on/off require a restart and will not update by just reloading
+- **/SteelMissions data** a little configurable chat message that displays info about the held mission and suggests commands to change them.
+- **/SteelMissions set [progress | requirement | completed | entry]** allows you to change the data on the held mission to your liking, entry for example will let you use a different config entry for the mission if you want to migrate from an entry to another.
+- **/SteelMissions list-types** gives you a list of all available mission types you can use
 
 There are 2 aliases available and they are:
-- **em** short for easymissions
-- **easym** short but not so short for easymissions
+- **em** short for SteelMissions
+- **easym** short but not so short for SteelMissions
 
 
 # Config Overview
@@ -218,7 +218,7 @@ This will explain the main config, the mission config, and the default.yml confi
 This is the main config of the plugin and contains the options related to the plugin itself and some global options for missions, such as the anti exploit features, timeout frequency, claim sound and messages
 
 ```yaml
-# EasyMissions Configuration,
+# SteelMissions Configuration,
 # Uses MiniMessage for coloring and placeholders.
 # Different messages have different placeholders available, see the wiki for full lists.
 
@@ -266,7 +266,7 @@ anti_abuse:
   recent_block_step_cache_size: 5
 
 menus:
-  # What will be displayed to the player when using the /easymissions data command.
+  # What will be displayed to the player when using the /SteelMissions data command.
   data_menu: |-
 ```
 
@@ -277,11 +277,11 @@ Above is the config you'll see when you open the config.yml file, the options in
 **messages:**
 - **reload** Message sent when the plugin is reloaded, no available placeholders
 - **reload_fail** Message sent when the plugin encounters a configuration error while loading the config, no available placeholders
-- **needs_player** Message sent when a command is run by console but requires a player such as the **/easymissions data** command, no available placeholders
+- **needs_player** Message sent when a command is run by console but requires a player such as the **/SteelMissions data** command, no available placeholders
 - **needs_mission** Message sent when a command expects a mission item in your hand but doesn't find it, no available placeholders
 - **give_mission** Message sent when a player is successfully given a mission whether using random, category-random or give, available placeholders are: **\<mission>** which will be replaced with the name of the mission config and **\<player>** which will be replaced with the name of the player that received it
 - **rand_mission_not_found:** This message is sent when a category chosen either by random or category-random has no mission configs, no available placeholders
-- **set_success** This message is sent when a successful change happens on a mission item with commands, like using **/easymissions set progress**, no available placeholders
+- **set_success** This message is sent when a successful change happens on a mission item with commands, like using **/SteelMissions set progress**, no available placeholders
 
 **categories** This is just the list of categories you have that your mission configs can use, the numbers followed by them are weights and the higher they are the more common and vice versa for lower values. You can add as many categories as you wish
 
@@ -301,7 +301,7 @@ Above is the config you'll see when you open the config.yml file, the options in
 - **recent_block_step_cache_size** How many blocks to store in the recent step cache **PER** player, don't confuse this with **update_walk** as this has no effect on it, don't make this too big to avoid huge memory usage and not too small so players cant just walk 2 more blocks and bypass it
 
 **menus:**
-- **data_menu** The message that will be sent to whoever runs the **/easymissions data**, available placeholders are **[here](#placeholders)**
+- **data_menu** The message that will be sent to whoever runs the **/SteelMissions data**, available placeholders are **[here](#placeholders)**
 
 ---
 
@@ -309,7 +309,7 @@ Above is the config you'll see when you open the config.yml file, the options in
 This contains all the required and options you will use to create missions from, missions will be linked to the config entries, the example.yml that comes with the plugin is a good example (who would've guessed) here:
 
 ```yaml
-# EasyMissions - Mission config
+# SteelMissions - Mission config
 # Any valid mission config file in the missions folder/directory will work. Feel free to categorize by file
 # Each top-level key is stored on the mission item. Keep the keys short
 # Because of the above, existing mission items with missing entries will not work
@@ -403,7 +403,7 @@ Now, for the logical part of the mission config which will determine its behavio
 #### missions/default.yml | Mission Defaults/Default Config
 This contains the default options your mission configs will be using if the options aren't present in them, the options that were deemed not fit to be in defaults were removed, here is an example:
 ```yaml
-# EasyMissions default mission config
+# SteelMissions default mission config
 # This is for missions with missing config entries and missing fields in mission configs.
 # You may edit anything you wish here, any missing fields in a mission config will get its field from here.
 # This file will be recreated each time it is deleted
